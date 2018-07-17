@@ -8,6 +8,8 @@ namespace CPU_Architecture_Optimiser
             // | The length for the arrays to be
             int arrayLength = 100000000;
 
+            Console.WriteLine("Generating arrays...");
+
             // | Create the arrays
             int[] unsorted = createOrderedArray(arrayLength);
             int[] sorted = createOrderedArray(arrayLength);
@@ -15,18 +17,23 @@ namespace CPU_Architecture_Optimiser
             // | Shuffle the array to be 'unsorted'
             unsorted = shuffleArray(unsorted);
 
+            Console.WriteLine("Arrays generated.");
+
             // | Begin adding the numbers in the unsorted array
-            Console.WriteLine("Unsorted Array starting now:");
+            Console.WriteLine();
+            Console.WriteLine("Unsorted Array starting now...");
             DateTime unsortedTimeBefore = DateTime.Now;
             int unsortedSum = addEvens(unsorted);
             DateTime unsortedTimeAfter = DateTime.Now;
             TimeSpan unsortedTimeTaken = unsortedTimeAfter - unsortedTimeBefore;
 
+
             // | Output time taken to process the unsorted array
             Console.WriteLine("Time taken for unsorted array: " + unsortedTimeTaken.TotalMilliseconds.ToString());
 
             // | Begin adding the numbers in the sorted array
-            Console.WriteLine("Sorted Array starting now: ");
+            Console.WriteLine();
+            Console.WriteLine("Sorted Array starting now...");
             DateTime sortedTimeBefore = DateTime.Now;
             int sortedSum = addEvens(sorted);
             DateTime sortedTimeAfter = DateTime.Now;
@@ -34,6 +41,9 @@ namespace CPU_Architecture_Optimiser
 
             // | Output the time taken to process the sorted array
             Console.WriteLine("Time taken for sorted array: " + sortedTimeTaken.TotalMilliseconds.ToString());
+
+            // | Read to prevent the application closing instantly
+            Console.ReadLine();
         }
 
         // | isEven()
