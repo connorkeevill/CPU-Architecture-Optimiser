@@ -6,6 +6,7 @@ namespace CPU_Architecture_Optimiser
     {
         public static void Main() {
             // | Get the length of the arrays
+            Console.WriteLine("A length upwards of 10000000 is recommended");
             int arrayLength = getUserArrayLength();
 
             // | Create the arrays
