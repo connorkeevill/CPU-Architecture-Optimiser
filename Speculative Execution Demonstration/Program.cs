@@ -5,45 +5,76 @@ namespace CPU_Architecture_Optimiser
     internal class Program
     {
         public static void Main() {
-            // | The length for the arrays to be
-            int arrayLength = 100000000;
-
-            Console.WriteLine("Generating arrays...");
+            // | Get the length of the arrays
+            int arrayLength = getUserArrayLength();
 
             // | Create the arrays
+            Console.WriteLine("Generating arrays...");
+            Console.WriteLine();
+
+            // | The unsorted array
             int[] unsorted = createOrderedArray(arrayLength);
+            unsorted = shuffleArray(unsorted); // | Shuffle it
+            Console.WriteLine("First (unsorted) array created.");
+
+            // | The sorted array
             int[] sorted = createOrderedArray(arrayLength);
+            Console.WriteLine("Second (sorted) array created.");
+            Console.WriteLine();
 
-            // | Shuffle the array to be 'unsorted'
-            unsorted = shuffleArray(unsorted);
-
-            Console.WriteLine("Arrays generated.");
+            Console.WriteLine("Both arrays generated.");
+            Console.WriteLine();
 
             // | Begin adding the numbers in the unsorted array
-            Console.WriteLine();
             Console.WriteLine("Unsorted Array starting now...");
-            DateTime unsortedTimeBefore = DateTime.Now;
-            int unsortedSum = addEvens(unsorted);
-            DateTime unsortedTimeAfter = DateTime.Now;
-            TimeSpan unsortedTimeTaken = unsortedTimeAfter - unsortedTimeBefore;
-
-
+            TimeSpan unsortedTimeTaken = getTimeSpanOfArraysEvens(unsorted);
             // | Output time taken to process the unsorted array
             Console.WriteLine("Time taken for unsorted array: " + unsortedTimeTaken.TotalMilliseconds.ToString());
+            Console.WriteLine();
 
             // | Begin adding the numbers in the sorted array
-            Console.WriteLine();
             Console.WriteLine("Sorted Array starting now...");
-            DateTime sortedTimeBefore = DateTime.Now;
-            int sortedSum = addEvens(sorted);
-            DateTime sortedTimeAfter = DateTime.Now;
-            TimeSpan sortedTimeTaken = sortedTimeAfter - sortedTimeBefore;
-
+            TimeSpan sortedTimeTaken = getTimeSpanOfArraysEvens(sorted);
             // | Output the time taken to process the sorted array
             Console.WriteLine("Time taken for sorted array: " + sortedTimeTaken.TotalMilliseconds.ToString());
+            Console.WriteLine();
 
             // | Read to prevent the application closing instantly
             Console.ReadLine();
+        }
+
+        // | getTimeSpanOfArraysEvens()
+        // |----------------------------------------------------
+        // | Takes an array as a parameter and records the time
+        // | it takes to calulate the sum of its even numbers.
+        // |------------------------------------------------
+        private static TimeSpan getTimeSpanOfArraysEvens(int[] array) {
+            DateTime timeBefore = DateTime.Now;
+            int sum = calculateSumOfEvens(array);
+            DateTime timeAfter = DateTime.Now;
+            TimeSpan timeTaken = timeAfter - timeBefore;
+            return timeTaken;
+        }
+
+        // | getUserArrayLength()
+        // |-----------------------------------------------------------
+        // | Gets user input for the length of the arrays to be used.
+        // |------------------------------------------------------
+        private static int getUserArrayLength() {
+            int arrayLength = -1; // | Initialised as -1 to make loop run
+
+            // | While/Try loop to catch any error from the input not being in a number form.
+            do {
+                try {
+                    Console.Write("Enter a (large) positive integer to define the length of the arrays: ");
+                    arrayLength = Convert.ToInt32(Console.ReadLine());
+                }
+                catch {
+                    Console.WriteLine("Something went wrong, try again. Please ensure that you type an integer.");
+                }
+            } while (arrayLength < 0);
+
+            return arrayLength;
         }
 
         // | isEven()
@@ -51,15 +82,15 @@ namespace CPU_Architecture_Optimiser
         // | Returns a flag indicating whether or not a number is even.
         // |--------------------------------------------------------
         private static bool isEven(int number) {
-            return (number % 2 == 0);
+            return number % 2 == 0;
         }
 
-        // | addEvens()
+        // | calculateSumOfEvens()
         // |---------------------------------------------------
         // | Iterates through the passed array and calculates
         // | the sum of all the even numbers in the array.
         // |-------------------------------------------
-        private static int addEvens(int[] numbers) {
+        private static int calculateSumOfEvens(int[] numbers) {
             int total = 0;
 
             foreach (int number in numbers) {
@@ -127,6 +158,5 @@ namespace CPU_Architecture_Optimiser
 
             return array;
         }
-
     }
 }
